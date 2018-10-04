@@ -21,8 +21,6 @@ public class Lab1 {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws Exception {
-        // TODO code application logic here
-        List<String> filesInDir=new ArrayList<String>();
         String currentPath=Paths.get(".").toAbsolutePath().normalize().toString();
         System.out.printf("Looking for Parameter Files in folder %s\n",currentPath);
         File[] files=new File(currentPath).listFiles(new FilenameFilter() {

@@ -1,5 +1,2 @@
-dadas
-dsa
-d
-sd
-as
+IF Corina GOTO Party THEN Alexia NOT GOTO Party
+IF Alexia GOTO Party THEN Gigi
