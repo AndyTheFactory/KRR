@@ -27,9 +27,45 @@ public class Parser {
             throw new ParserException("Unexpected %s in expression",lookahead);
        
     }
-    public void expression()
+    private void expression()
+    {
+        ifOp();
+        affirmOp();
+    }
+    
+    private void ifOp()
+    {
+        if(lookahead.token==Token.IF){
+            NextToken();
+            affirmOp();
+            thenOp();            
+        }
+    }
+    private void affirmOp()
     {
         
+    }
+    private void thenOp()
+    {
+        if (lookahead.token==Token.THEN){
+            affirmOp();
+            unlessOp();
+        }
+    }
+    private void unlessOp()
+    {
+        if (lookahead.token==Token.UNLESS){
+            affirmOp();
+        }        
+    }
+    private void NextToken()
+    {
+        tokens.pop();
+        if (tokens.isEmpty())
+            lookahead=new Token(Token.EPSILON,"");
+        else
+            lookahead=tokens.getFirst();
+              
     }
            
 }
