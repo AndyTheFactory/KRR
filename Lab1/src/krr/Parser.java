@@ -27,6 +27,15 @@ public class Parser {
             throw new ParserException("Unexpected %s in expression",lookahead);
        
     }
+    private void NextToken()
+    {
+        tokens.pop();
+        if (tokens.isEmpty())
+            lookahead=new Token(Token.EPSILON,"");
+        else
+            lookahead=tokens.getFirst();
+              
+    }
     public void expression()
     {
         
