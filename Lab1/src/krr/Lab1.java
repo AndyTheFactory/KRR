@@ -41,9 +41,13 @@ public class Lab1 {
         Scanner fr=new Scanner(files[i-1]);            
         String line;
         i=0;
+        Tokenizer tk=Tokenizer.getExpressionTokenizer();        
         while(fr.hasNextLine()){
             line=fr.nextLine();
             System.out.println((++i)+". "+line);
+            tk.tokenize(line);
+            System.out.println("------> \n"+tk);
+            
         }
         
     }

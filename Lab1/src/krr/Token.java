@@ -25,12 +25,33 @@ public class Token {
     
     public final int token;
     public final String sequence;
+    public final int pos;
     
-    public Token(int token, String sequence)
+    public Token(int token, String sequence,int pos)
     {
         super();
         this.token=token;
         this.sequence=sequence;
+        this.pos = pos;    
+    }
+    public String toString()
+    {
+        switch (this.token){
+            default:
+            case Token.EPSILON: return "€";
+            
+            case Token.IF: return "IF";
+            case Token.THEN: return "THEN";
+            case Token.UNLESS: return "UNLESS";
+            case Token.OPEN_BRACKET: return "O_BRACKET";
+            case Token.CLOSED_BRACKET: return "C_BRACKET";
+            case Token.NOT: return "NOT";
+            case Token.OR: return "OR";
+            case Token.AND: return "AND";
+            case Token.SUBJECT: return "[Subject]";
+            case Token.PREDICATE: return "[Pred]";
+            case Token.OBJECT: return "[Object]";
         
+        }
     }
 }

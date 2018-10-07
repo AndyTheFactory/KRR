@@ -1,2 +1,3 @@
-IF Corina GOTO Party THEN Alexia NOT GOTO Party
-IF Alexia GOTO Party THEN Gigi
+IF (John GOTO Party AND Joyce GOTO Party) THEN Claire GOTO Party
+Stephen GOTO Party
+IF (NOT John GOTO Party OR (NOT Joyce GOTO Party AND John GOTO Party)) THEN Stephen GOTO Party

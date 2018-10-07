@@ -62,7 +62,7 @@ public class Parser {
     {
         tokens.pop();
         if (tokens.isEmpty())
-            lookahead=new Token(Token.EPSILON,"");
+            lookahead=new Token(Token.EPSILON,"",-1);
         else
             lookahead=tokens.getFirst();
               
