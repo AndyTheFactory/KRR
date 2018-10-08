@@ -46,9 +46,9 @@ public class Lab1 {
         while(fr.hasNextLine()){
             line=fr.nextLine();
             System.out.println((++i)+". "+line);
-            prs.parse(line);
-            System.out.println("------> \n"+prs.toString());
-            
+            ExpressionNode expr=prs.parse(line);
+            System.out.println("------> "+ExpressionHelper.printExpression(expr));
+            System.out.println("----------> "+ExpressionHelper.printExpression(ExpressionHelper.normalizeNot(expr,false)));
         }
         
     }

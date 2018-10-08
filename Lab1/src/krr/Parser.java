@@ -75,35 +75,43 @@ public class Parser {
     }
     private ExpressionNode affirmOp()
     {
-        if (lookahead.token==Token.OPEN_BRACKET){
-            NextToken();
-            ExpressionNode expr=affirmOp();
-            if (lookahead.token!=Token.CLOSED_BRACKET)
-                throw new ParserException(String.format("Expected ) but found %s", lookahead.toString()));
-            NextToken();
-            return expr;
-        }else if (lookahead.token==Token.NOT){
-            NextToken();
-            NotExpressionNode expr=new NotExpressionNode(affirmOp());
-            return expr;
-            
-        }else if (lookahead.token==Token.SUBJECT){
-            VariableExpressionNode expr=new VariableExpressionNode(lookahead.sequence);
-            NextToken();
-            if (lookahead.token!=Token.PREDICATE)
-                throw new ParserException(String.format("Expected Predicate but found %s", lookahead.toString()));
-            NextToken();
-            if (lookahead.token!=Token.OBJECT)
-                throw new ParserException(String.format("Expected Object but found %s", lookahead.toString()));
-            NextToken();
-            
-            if (lookahead.token==Token.EPSILON)
+        switch (lookahead.token) {
+            case Token.OPEN_BRACKET:
+            {
+                NextToken();
+                ExpressionNode expr=affirmOp();
+                if (lookahead.token!=Token.CLOSED_BRACKET)
+                    throw new ParserException(String.format("Expected ) but found %s", lookahead.toString()));
+                NextToken();
                 return expr;
-            else
-                return expression(expr);
-            
-        }else if (lookahead.token==Token.EPSILON){
-            return null;
+            }
+            case Token.NOT:
+            {
+                NextToken();
+                NotExpressionNode expr=new NotExpressionNode(affirmOp());
+                return expr;
+                
+            }
+            case Token.SUBJECT:
+            {
+                VariableExpressionNode expr=new VariableExpressionNode(lookahead.sequence);
+                NextToken();
+                if (lookahead.token!=Token.PREDICATE)
+                    throw new ParserException(String.format("Expected Predicate but found %s", lookahead.toString()));
+                NextToken();
+                if (lookahead.token!=Token.OBJECT)
+                    throw new ParserException(String.format("Expected Object but found %s", lookahead.toString()));
+                NextToken();
+                
+                if (lookahead.token==Token.EPSILON ||lookahead.token==Token.CLOSED_BRACKET )
+                    return expr;
+                else
+                    return expression(expr);
+                
+            }
+            default:
+            case Token.EPSILON:
+                break;
         }
         return null;
         
@@ -111,6 +119,7 @@ public class Parser {
     private ExpressionNode thenOp()
     {
         if (lookahead.token==Token.THEN){
+            NextToken();
             ExpressionNode expr=affirmOp();
             if (lookahead.token==Token.UNLESS){
                 NotExpressionNode expr2=new NotExpressionNode(affirmOp());

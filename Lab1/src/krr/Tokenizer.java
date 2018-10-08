@@ -89,6 +89,10 @@ public class Tokenizer {
               if (info.token!=Token.OPEN_BRACKET && tok.length()>1 && tok.charAt(tok.length()-1)=='(') {
                 s = m.replaceFirst("(").trim();
                 tok=tok.substring(0,tok.length()-1);
+              }else
+              if (info.token!=Token.CLOSED_BRACKET && tok.length()>1 && tok.charAt(tok.length()-1)==')') {
+                s = m.replaceFirst(")").trim();
+                tok=tok.substring(0,tok.length()-1);
               }
               else
                 s = m.replaceFirst("").trim();

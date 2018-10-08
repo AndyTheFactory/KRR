@@ -18,7 +18,7 @@ public class AndExpressionNode   extends OperatorExpressionNode
     
     public int getType()
     {
-        return ExpressionNode.OR_NODE;
+        return ExpressionNode.AND_NODE;
     }
     public boolean getValue()
     {
