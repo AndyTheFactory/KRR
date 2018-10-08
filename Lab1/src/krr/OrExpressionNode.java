@@ -9,7 +9,8 @@ package krr;
  *
  * @author andrei
  */
-public class OrExpressionNode  extends OperatorExpressionNode{
+public class OrExpressionNode  extends OperatorExpressionNode
+{
 
     public OrExpressionNode(ExpressionNode lhs, ExpressionNode rhs) {
         super(lhs, rhs);

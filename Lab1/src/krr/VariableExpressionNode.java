@@ -10,15 +10,22 @@ package krr;
  * @author andrei
  */
 public class VariableExpressionNode implements ExpressionNode{
-    public char name;
+    public String name;
     public boolean negation;
     public boolean value;
     
-    public VariableExpressionNode(char name,boolean value)
+    public VariableExpressionNode(String name)
+    {
+        this.name=name;
+        this.value=true;
+        this.negation=false;
+        
+    }
+    public VariableExpressionNode(String name,boolean value)
     {
         this.name=name;
         this.value=value;
-        
+        this.negation=false;
     }
     public int getType()
     {
@@ -27,6 +34,11 @@ public class VariableExpressionNode implements ExpressionNode{
     public boolean getValue()
     {
         return negation?!value:value;
+    }
+    
+    public String toString()
+    {
+        return String.format("Var(%s)", name);
     }
             
 }

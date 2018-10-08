@@ -20,4 +20,17 @@ public abstract class OperatorExpressionNode implements ExpressionNode{
         this.rhs=rhs;        
     }
     
+    public String toString()
+    {
+        switch(this.getType()){
+            default:
+            case ExpressionNode.VARIABLE_NODE: return "Var";
+            case ExpressionNode.OR_NODE: return "V";
+            case ExpressionNode.AND_NODE: return "Ʌ";
+            case ExpressionNode.NOT_NODE: return "¬";
+            case ExpressionNode.IMPLIES_NODE: return "->";
+            case ExpressionNode.IFF_NODE: return "<=>";
+        }
+    }
+    
 }

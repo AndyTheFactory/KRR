@@ -9,20 +9,24 @@ package krr;
  *
  * @author andrei
  */
-public class AndExpressionNode   extends OperatorExpressionNode
+public class NotExpressionNode extends OperatorExpressionNode
 {
 
-    public AndExpressionNode(ExpressionNode lhs, ExpressionNode rhs) {
-        super(lhs, rhs);
+    public NotExpressionNode(ExpressionNode lhs)
+    {
+        super(lhs, null);
     }
-    
+
+    @Override
     public int getType()
     {
-        return ExpressionNode.OR_NODE;
+        return ExpressionNode.NOT_NODE;
     }
+
+    @Override
     public boolean getValue()
     {
-        return lhs.getValue() & rhs.getValue();
+        return !lhs.getValue();
     }
     
 }
