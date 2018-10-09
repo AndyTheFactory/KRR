@@ -1,0 +1,4 @@
+Alfred GOTO Party OR Beth GOTO Party
+IF Beth GOTO Party THEN Claire GOTO Party
+Daniel GOTO Party IFF NOT Alfred GOTO Party
+Claire GOTO Party

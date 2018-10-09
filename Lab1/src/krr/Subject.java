@@ -10,7 +10,7 @@ package krr;
  * @author andrei
  */
 public class Subject {
-    public static final String[] SUBJECTS={"John","Joyce","Claire","Stephen"};
+    public static final String[] SUBJECTS={"Alfred","Beth","Claire","Daniel"};
     
     public static String getAllSubjectsRegex()
     {

@@ -4,15 +4,17 @@
  * and open the template in the editor.
  */
 package krr;
-
+import java.util.Collections;
+import java.util.List;
+import java.util.ArrayList;
 /**
  *
  * @author andrei
  */
 public class ExpressionHelper {
+    static ArrayList<TableauNode> vv;
     public static ExpressionNode normalizeNot(ExpressionNode expr, boolean negate)
     {
-        ExpressionNode newexpr;
         
         if(negate){
             switch(expr.getType()){
@@ -20,40 +22,40 @@ public class ExpressionHelper {
                 case ExpressionNode.VARIABLE_NODE:
                 {
                     VariableExpressionNode v=(VariableExpressionNode) expr;
-                    if (negate) v.negation=!v.negation;
-                    newexpr=v;
-                    break;
+                    VariableExpressionNode newexpr=new VariableExpressionNode(v.name,v.value);
+                    newexpr.negation=!v.negation;
+                    return newexpr;
                 }
                 case ExpressionNode.OR_NODE:
                 {
                     OperatorExpressionNode n=(OperatorExpressionNode) expr;
-                    newexpr=new AndExpressionNode(
+                    AndExpressionNode newexpr=new AndExpressionNode(
                         ExpressionHelper.normalizeNot(n.lhs,true),
                         ExpressionHelper.normalizeNot(n.rhs,true)
                     );
-                    break;
+                    return newexpr;
                 }
                 case ExpressionNode.AND_NODE:
                 {
                     OperatorExpressionNode n=(OperatorExpressionNode) expr;
-                    newexpr=new OrExpressionNode(
+                    OrExpressionNode newexpr=new OrExpressionNode(
                         ExpressionHelper.normalizeNot(n.lhs,true),
                         ExpressionHelper.normalizeNot(n.rhs,true)
                     );
-                    break;
+                    return newexpr;
                 }
                 case ExpressionNode.IMPLIES_NODE:                
                 case ExpressionNode.IFF_NODE:                
                 {
                     OperatorExpressionNode n=(OperatorExpressionNode) expr;
-                    newexpr=ExpressionHelper.normalizeNot(ExpressionHelper.normalizeNot(expr,false), true);
-                    break;
+                    ExpressionNode newexpr=ExpressionHelper.normalizeNot(ExpressionHelper.normalizeNot(expr,false), true);
+                    return newexpr;
                 }
                 case ExpressionNode.NOT_NODE:
                 {
                     NotExpressionNode v=(NotExpressionNode) expr;
-                    newexpr=v.lhs;
-                    break;
+                    ExpressionNode newexpr=ExpressionHelper.normalizeNot(v.lhs,false);
+                    return newexpr;
                 }
 
 
@@ -63,8 +65,10 @@ public class ExpressionHelper {
                 default:
                 case ExpressionNode.VARIABLE_NODE:
                 {
-                    newexpr=expr;
-                    break;
+                    VariableExpressionNode v=(VariableExpressionNode) expr;
+                    VariableExpressionNode newexpr=new VariableExpressionNode(v.name,v.value);
+                    newexpr.negation=v.negation;
+                    return newexpr;
                 }
                 case ExpressionNode.OR_NODE:
                 case ExpressionNode.AND_NODE:
@@ -72,38 +76,42 @@ public class ExpressionHelper {
                     OperatorExpressionNode n=(OperatorExpressionNode) expr;
                     n.lhs=ExpressionHelper.normalizeNot(n.lhs, false);
                     n.rhs=ExpressionHelper.normalizeNot(n.rhs, false);
-                    newexpr=n;
-                    break;
+                    if (expr.getType()==ExpressionNode.AND_NODE){
+                        AndExpressionNode newexpr=new AndExpressionNode(n.lhs, n.rhs);
+                        return newexpr;
+                    }else{
+                        OrExpressionNode newexpr=new OrExpressionNode(n.lhs, n.rhs);
+                        return newexpr;
+                    }
                 }
                 case ExpressionNode.IMPLIES_NODE:                
                 {
                     ImpliesExpressionNode n=(ImpliesExpressionNode) expr;                    
-                    newexpr=new OrExpressionNode(
+                    OrExpressionNode newexpr=new OrExpressionNode(
                                 ExpressionHelper.normalizeNot(n.lhs,true),
                                 ExpressionHelper.normalizeNot(n.rhs,false)
                             );
-                    break;
+                    return newexpr;
                 }
                 case ExpressionNode.IFF_NODE:                
                 {
                     IffExpressionNode n=(IffExpressionNode) expr;                    
-                    newexpr=new OrExpressionNode(
+                    OrExpressionNode newexpr=new OrExpressionNode(
                                 new AndExpressionNode(ExpressionHelper.normalizeNot(n.lhs,false), ExpressionHelper.normalizeNot(n.rhs,false)),
                                 new AndExpressionNode(ExpressionHelper.normalizeNot(n.lhs,true), ExpressionHelper.normalizeNot(n.rhs,true))
                             );
-                    break;
+                    return newexpr;
                 }
                 case ExpressionNode.NOT_NODE:
                 {
                     NotExpressionNode v=(NotExpressionNode) expr;
-                    newexpr=ExpressionHelper.normalizeNot(v.lhs, true);
-                    break;
+                    ExpressionNode newexpr=ExpressionHelper.normalizeNot(v.lhs, true);
+                    return newexpr;
                 }
 
 
             }
         }
-        return newexpr;
     }
     public static String printExpression(ExpressionNode expr)
     {
@@ -141,5 +149,172 @@ public class ExpressionHelper {
         return res.toString();
     }
     
+    public static TableauNode Expression2Tableau(List<ExpressionNode> exprlist)
+    {
+        int i;
+        for(i=0;i<exprlist.size();i++)
+        {
+        
+            if (exprlist.get(i).getType()==ExpressionNode.AND_NODE){
+                Collections.swap(exprlist,0,i); //start with an AND node (trunk)
+                break;
+            }
+        }
+        List<TableauNode> tableaus=new ArrayList<TableauNode>();
+        for(ExpressionNode expr:exprlist){
+            //take _not_ into nodes, expand _not_ in paranthesis
+            ExpressionNode expr2=ExpressionHelper.normalizeNot(expr, false);
+            TableauNode tab=ExpressionHelper.Expression2Tableau(expr2);
+            tableaus.add(tab);
+        }
+        
+        return tableaus.get(0);
+    }
+    public static TableauNode Expression2Tableau(ExpressionNode expr)
+    {
+        if (expr==null) return null;
+        
+        switch (expr.getType()) {
+            case ExpressionNode.VARIABLE_NODE:{
+                VariableExpressionNode n=(VariableExpressionNode)expr;
+                VariableTableauNode tnode=new VariableTableauNode(n.name,n.negation);
+                tnode.next=null;
+                return tnode;
+            }
+            case ExpressionNode.AND_NODE:{
+                AndExpressionNode n=(AndExpressionNode)expr;
+                TrunkTableauNode tnode=new TrunkTableauNode();
+                tnode.next=ExpressionHelper.Expression2Tableau(n.lhs);
+                ExpressionHelper.AppendTableauToLeafs(ExpressionHelper.Expression2Tableau(n.rhs), tnode);
+                return tnode;
+                
+            }
+            case ExpressionNode.OR_NODE:{
+                OrExpressionNode n=(OrExpressionNode)expr;
+                BranchTableauNode tnode=new BranchTableauNode();
+                tnode.left=ExpressionHelper.Expression2Tableau(n.lhs);
+                tnode.right=ExpressionHelper.Expression2Tableau(n.rhs);
+                return tnode;
+                
+            }
+            default:
+                throw new ParserException(String.format("Tableau creation Error. unexpected Node type %s", expr.toString()));
+        }
+    }
+    static public void AppendTableauToLeafs(TableauNode tableauToAppend,TableauNode tableau){
+        if (tableauToAppend==null) return;
+        switch (tableau.getType()){
+            case TableauNode.VARIABLE_NODE :
+            {
+                VariableTableauNode t=(VariableTableauNode) tableau;
+                if (t.next==null){
+                    t.next=ExpressionHelper.CloneTableau(tableauToAppend);
+                    return;
+                }else{
+                    ExpressionHelper.AppendTableauToLeafs(tableauToAppend, t.next);
+                }
+            }
+            case TableauNode.TRUNK_NODE:
+            {
+                TrunkTableauNode t=(TrunkTableauNode) tableau;
+                ExpressionHelper.AppendTableauToLeafs(tableauToAppend, t.next);
+                return;
+            }
+            case TableauNode.BRANCH_NODE:
+            {
+                BranchTableauNode t=(BranchTableauNode) tableau;
+                ExpressionHelper.AppendTableauToLeafs(tableauToAppend, t.left);
+                ExpressionHelper.AppendTableauToLeafs(tableauToAppend, t.right);
+                return;
+            }
+            default:
+                throw new ParserException(String.format("Tableau creation Error. unexpected Node type %s", tableau.toString()));
+                
+        }
+    }
+    static public TableauNode CloneTableau(TableauNode tableau){
+        switch (tableau.getType()){
+            case TableauNode.VARIABLE_NODE :
+            {
+                VariableTableauNode t=(VariableTableauNode) tableau;
+                VariableTableauNode tnew=new VariableTableauNode(t.var,t.not);
+                
+                if (t.next!=null){
+                    tnew.next=ExpressionHelper.CloneTableau(t.next);
+                }
+                return tnew;
+            }
+            case TableauNode.TRUNK_NODE:
+            {
+                TrunkTableauNode t=(TrunkTableauNode) tableau;
+                TrunkTableauNode tnew=new TrunkTableauNode();
+                tnew.next=ExpressionHelper.CloneTableau(t.next);
+                return tnew;
+            }
+            case TableauNode.BRANCH_NODE:
+            {
+                BranchTableauNode t=(BranchTableauNode) tableau;
+                BranchTableauNode tnew=new BranchTableauNode();
+                tnew.left=ExpressionHelper.CloneTableau(t.left);
+                tnew.right=ExpressionHelper.CloneTableau(t.right);
+                return tnew;
+            }
+            default:
+                throw new ParserException(String.format("Tableau creation Error. unexpected Node type %s", tableau.toString()));
+                
+        }
+        
+    }
+    public static boolean isContradiction(TableauNode tableau)
+    {
+        if(vv==null){
+            ArrayList<String> vv=new ArrayList<String>();
+        }
+        switch (tableau.getType()){
+            case TableauNode.VARIABLE_NODE :
+            {
+                VariableTableauNode t=(VariableTableauNode) tableau;
+                if ((t.not && vv.contains(t.var))||
+                        (!t.not && vv.contains('¬'+t.var))){
+                    return true; //contradiction
+                }else{
+                    if (t.next==null){
+                        return false;
+                    }else{
+                        vv.add(t.not?('¬'+t.var):t.var);
+                        boolean b=ExpressionHelper.isContradiction(t.next);
+                        
+                    }
+                }
+                
+
+            }
+            case TableauNode.TRUNK_NODE:
+            {
+                TrunkTableauNode t=(TrunkTableauNode) tableau;
+                TrunkTableauNode tnew=new TrunkTableauNode();
+                tnew.next=ExpressionHelper.CloneTableau(t.next);
+                return tnew;
+            }
+            case TableauNode.BRANCH_NODE:
+            {
+                BranchTableauNode t=(BranchTableauNode) tableau;
+                BranchTableauNode tnew=new BranchTableauNode();
+                tnew.left=ExpressionHelper.CloneTableau(t.left);
+                tnew.right=ExpressionHelper.CloneTableau(t.right);
+                return tnew;
+            }
+            default:
+                throw new ParserException(String.format("Tableau creation Error. unexpected Node type %s", tableau.toString()));
+                
+        }
+        
+    }
+    
+    public static boolean isSatisfied(ArrayList<TableauNode> tableaus,TableauNode statement)
+    {
+        
+        
+    }
 }
 

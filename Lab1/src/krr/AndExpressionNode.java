@@ -24,5 +24,6 @@ public class AndExpressionNode   extends OperatorExpressionNode
     {
         return lhs.getValue() & rhs.getValue();
     }
+
     
 }

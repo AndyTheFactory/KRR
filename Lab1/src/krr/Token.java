@@ -13,7 +13,7 @@ public class Token {
     public static final int EPSILON=0;
     public static final int IF=1;
     public static final int THEN=2;
-    public static final int UNLESS=3;
+    public static final int IFF=3;
     public static final int OPEN_BRACKET=4;
     public static final int CLOSED_BRACKET=5;
     public static final int NOT=6;
@@ -42,7 +42,7 @@ public class Token {
             
             case Token.IF: return "IF";
             case Token.THEN: return "THEN";
-            case Token.UNLESS: return "UNLESS";
+            case Token.IFF: return "IFF";
             case Token.OPEN_BRACKET: return "O_BRACKET";
             case Token.CLOSED_BRACKET: return "C_BRACKET";
             case Token.NOT: return "NOT";

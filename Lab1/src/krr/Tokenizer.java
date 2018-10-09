@@ -49,7 +49,7 @@ public class Tokenizer {
       Tokenizer tokenizer = new Tokenizer();
       tokenizer.add("IF[\\s\\(]", Token.IF);
       tokenizer.add("THEN[\\s\\(]", Token.THEN);
-      tokenizer.add("UNLESS[\\s\\(]", Token.UNLESS);
+      tokenizer.add("IFF[\\s\\(]", Token.IFF);
       tokenizer.add("\\(", Token.OPEN_BRACKET);
       tokenizer.add("\\)", Token.CLOSED_BRACKET);
       tokenizer.add("NOT[\\s\\(]", Token.NOT);

@@ -43,14 +43,30 @@ public class Lab1 {
         i=0;
 
         Parser prs=new Parser();
+        ArrayList<TableauNode> statementlist=new ArrayList<TableauNode>();
+        ExpressionNode lastExpr=null;
+        TableauNode lastTab=null;
         while(fr.hasNextLine()){
             line=fr.nextLine();
             System.out.println((++i)+". "+line);
             ExpressionNode expr=prs.parse(line);
             System.out.println("------> "+ExpressionHelper.printExpression(expr));
             System.out.println("----------> "+ExpressionHelper.printExpression(ExpressionHelper.normalizeNot(expr,false)));
+            TableauNode tab=ExpressionHelper.Expression2Tableau(ExpressionHelper.normalizeNot(expr,false));
+            System.out.println(TableauPrinter.printTableau(tab));
+            statementlist.add(tab);
+            lastExpr=expr;
+            lastTab=tab;
         }
+        statementlist.remove(lastTab);//remove last
+        TableauNode cond=ExpressionHelper.Expression2Tableau(ExpressionHelper.normalizeNot(lastExpr,true));
+        System.out.println(" ======= \n");
+        System.out.println(ExpressionHelper.printExpression(lastExpr)+"\n");
         
+        if (ExpressionHelper.isSatisfied(statementlist, cond))
+            System.out.println(" is satisfied \n");
+        else
+            System.out.println(" is NOOOT satisfied \n");
     }
     
 }

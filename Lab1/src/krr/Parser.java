@@ -47,6 +47,10 @@ public class Parser {
     {
         ExpressionNode res;
         switch(lookahead.token){
+            case Token.IFF:
+                NextToken();
+                res = new IffExpressionNode(expr, affirmOp());
+                break;
             case Token.AND:
                 NextToken();
                 res = new AndExpressionNode(expr, affirmOp());
@@ -121,12 +125,7 @@ public class Parser {
         if (lookahead.token==Token.THEN){
             NextToken();
             ExpressionNode expr=affirmOp();
-            if (lookahead.token==Token.UNLESS){
-                NotExpressionNode expr2=new NotExpressionNode(affirmOp());
-                IffExpressionNode res=new IffExpressionNode(expr2, expr);
-                return res;
-            }else 
-                return expr;
+            return expr;
         }
         return null;
     }
