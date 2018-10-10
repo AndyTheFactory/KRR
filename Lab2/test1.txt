@@ -1,0 +1,4 @@
+IF Weather is sunny THEN park is Beautiful 
+IF Park is beautiful THEN people walk dogs 
+IF people walk dogs THEN park full of dogs
+Weather is sunny AND park full of dogs

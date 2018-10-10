@@ -213,6 +213,7 @@ public class ExpressionHelper {
                 }else{
                     ExpressionHelper.AppendTableauToLeafs(tableauToAppend, t.next);
                 }
+                return;
             }
             case TableauNode.TRUNK_NODE:
             {

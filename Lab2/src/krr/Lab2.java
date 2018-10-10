@@ -15,7 +15,7 @@ import java.util.Scanner;
  *
  * @author andrei
  */
-public class Lab1 {
+public class Lab2 {
 
     /**
      * @param args the command line arguments
@@ -58,12 +58,13 @@ public class Lab1 {
             lastExpr=expr;
             lastTab=tab;
         }
+        System.out.println(prs.variables);
         statementlist.remove(lastTab);//remove last
         TableauNode cond=ExpressionHelper.Expression2Tableau(ExpressionHelper.normalizeNot(lastExpr,true));
         System.out.println(" ======= \n");
         System.out.println(ExpressionHelper.printExpression(lastExpr)+"\n");
         
-        if (!ExpressionHelper.isSatisfied(statementlist, cond))
+        if (ExpressionHelper.isSatisfied(statementlist, cond))
             System.out.println(" is satisfied \n");
         else
             System.out.println(" is NOOOT satisfied \n");
