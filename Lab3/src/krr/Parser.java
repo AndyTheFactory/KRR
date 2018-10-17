@@ -95,18 +95,34 @@ public class Parser {
             case Token.BOX:
             {
                 NextToken();
-                NotExpressionNode expr=new NotExpressionNode(affirmOp());
+                BoxExpressionNode expr=new BoxExpressionNode(affirmOp());
                 return expr;
                 
             }
             case Token.DIAMOND:
             {
                 NextToken();
-                NotExpressionNode expr=new NotExpressionNode(affirmOp());
+                DiamondExpressionNode expr=new DiamondExpressionNode(affirmOp());
                 return expr;
                 
             }
-            
+            case Token.VARIABLE:
+            {
+                StringBuilder s=new StringBuilder(lookahead.sequence);
+                
+                VariableExpressionNode expr=new VariableExpressionNode(lookahead.sequence);
+                NextToken();
+                expr.name=s.toString();
+                
+                if (!variables.contains(expr.name.toUpperCase()))
+                    variables.add(expr.name.toUpperCase());
+                
+                if (lookahead.token==Token.EPSILON ||lookahead.token==Token.CLOSED_BRACKET )
+                    return expr;
+                else
+                    return expression(expr);
+
+            }
             default:
             case Token.EPSILON:
                 break;

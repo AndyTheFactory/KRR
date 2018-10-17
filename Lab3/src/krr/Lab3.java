@@ -33,10 +33,11 @@ public class Lab3 {
             System.out.println((++i)+". "+file);
         }
         System.out.println("\nPlease choose parameter file: ");
-        
+        i=1;
+        /*
         Scanner input=new Scanner(System.in);
         i=input.nextInt();
-        
+        */
         Scanner fr=new Scanner(files[i-1]);            
         String line;
         i=0;

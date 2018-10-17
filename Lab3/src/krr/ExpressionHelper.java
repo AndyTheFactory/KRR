@@ -143,6 +143,20 @@ public class ExpressionHelper {
                 res.append("("+ExpressionHelper.printExpression(v.lhs)+") ");
                 break;
             }
+            case ExpressionNode.BOX_NODE:
+            {
+                BoxExpressionNode v=(BoxExpressionNode) expr;
+                res.append('□');
+                res.append("("+ExpressionHelper.printExpression(v.lhs)+") ");
+                break;
+            }
+            case ExpressionNode.DIAMOND_NODE:
+            {
+                DiamondExpressionNode v=(DiamondExpressionNode) expr;
+                res.append('◊');
+                res.append("("+ExpressionHelper.printExpression(v.lhs)+") ");
+                break;
+            }
                
             
         }
