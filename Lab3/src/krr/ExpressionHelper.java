@@ -57,6 +57,19 @@ public class ExpressionHelper {
                     ExpressionNode newexpr=ExpressionHelper.normalizeNot(v.lhs,false);
                     return newexpr;
                 }
+                case ExpressionNode.BOX_NODE:
+                {
+                    OperatorExpressionNode n=(OperatorExpressionNode) expr;
+                    DiamondExpressionNode newexpr=new DiamondExpressionNode(ExpressionHelper.normalizeNot(n.lhs,true));
+                    return newexpr;
+                }
+                case ExpressionNode.DIAMOND_NODE:
+                {
+                    OperatorExpressionNode n=(OperatorExpressionNode) expr;
+                    BoxExpressionNode newexpr=new BoxExpressionNode(ExpressionHelper.normalizeNot(n.lhs,true));
+                    return newexpr;
+                }
+                
 
 
             }
@@ -108,6 +121,22 @@ public class ExpressionHelper {
                     ExpressionNode newexpr=ExpressionHelper.normalizeNot(v.lhs, true);
                     return newexpr;
                 }
+                case ExpressionNode.BOX_NODE:
+                case ExpressionNode.DIAMOND_NODE:
+                {
+                    OperatorExpressionNode n=(OperatorExpressionNode) expr;
+                    n.lhs=ExpressionHelper.normalizeNot(n.lhs, false);
+                    if (expr.getType()==ExpressionNode.BOX_NODE){
+                        BoxExpressionNode newexpr=new BoxExpressionNode(n.lhs);
+                        return newexpr;
+                    }else{
+                        DiamondExpressionNode newexpr=new DiamondExpressionNode(n.lhs);
+                        return newexpr;
+                    }
+                    
+                }
+                
+
 
 
             }

@@ -58,6 +58,11 @@ public class Lab3 {
                 ExpressionNode expr=prs.parse(line);
                 System.out.println("------> "+ExpressionHelper.printExpression(expr));
                 
+                System.out.println("-----------> "+ExpressionHelper.printExpression(
+                            ExpressionHelper.normalizeNot(expr, false)
+                        )
+                );
+                
             }
             
         }
