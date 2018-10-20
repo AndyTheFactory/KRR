@@ -45,7 +45,7 @@ public class Lab3 {
         ArrayList<KripkeWorld> kworld=new ArrayList<>();
         Parser prs=new Parser();
         
-        
+        ArrayList<ExpressionNode> elist=new ArrayList<>();
         while(fr.hasNextLine()){
             line=fr.nextLine().trim();
             if (line.startsWith("R(")){
@@ -62,8 +62,17 @@ public class Lab3 {
                             ExpressionHelper.normalizeNot(expr, false)
                         )
                 );
-                
+                elist.add(expr);
             }
+            
+        }
+        for(ExpressionNode expr:elist){
+            KripkeWorld kw= kworld.get(0);
+                System.out.println(String.format("In Kripkeworld %s, Expression %s evaluates %s", 
+                        kw.name,
+                        ExpressionHelper.printExpression(expr),
+                        ExpressionHelper.evalInWorld( ExpressionHelper.normalizeNot(expr, false),kw)
+                        ));
             
         }
     }

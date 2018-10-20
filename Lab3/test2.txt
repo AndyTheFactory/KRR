@@ -1,4 +1,8 @@
-Alfred GOTO Party OR Beth GOTO Party
-IF Beth GOTO Party THEN Claire GOTO Party
-Daniel GOTO Party IFF NOT Alfred GOTO Party
-Claire GOTO Party
+W0:D,W
+W1:D,W,~C,F,B
+W2:D,W,~F,C,B
+W3:D,W,~C,~F,B
+R(W0,W1)
+R(W0,W2)
+R(W0,W3)
+#B

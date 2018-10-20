@@ -83,7 +83,10 @@ public class Parser {
                 if (lookahead.token!=Token.CLOSED_BRACKET)
                     throw new ParserException(String.format("Expected ) but found %s", lookahead.toString()));
                 NextToken();
-                return expr;
+                if (lookahead.token==Token.EPSILON)
+                    return expr;
+                else
+                    return expression(expr);
             }
             case Token.NOT:
             {

@@ -351,7 +351,7 @@ public class ExpressionHelper {
                 BranchTableauNode t=(BranchTableauNode) tableau;
                 BranchTableauNode tnew=new BranchTableauNode();
                 
-                return ExpressionHelper.isContradiction(t.left)||
+                return ExpressionHelper.isContradiction(t.left)&
                         ExpressionHelper.isContradiction(t.right);
             }
             default:
@@ -374,9 +374,47 @@ public class ExpressionHelper {
             
         }
         ExpressionHelper.AppendTableauToLeafs(statement, ttest);
-        if (ExpressionHelper.isContradiction(ttest)) return false;
-        else return true;
+        return !ExpressionHelper.isContradiction(ttest);
             
+    }
+    public static boolean evalInWorld(ExpressionNode expr, KripkeWorld kw){        
+        boolean res=false;
+        switch (expr.getType()){
+            case ExpressionNode.BOX_NODE:{
+                res=kw.relations.size()>0;
+                BoxExpressionNode n=(BoxExpressionNode)expr;
+                for(KripkeWorld k:kw.relations){           
+                    res=res & ExpressionHelper.evalInWorld(n.lhs, k);
+                }
+                break;
+            }
+            case ExpressionNode.DIAMOND_NODE:{
+                BoxExpressionNode n=(BoxExpressionNode)expr;
+                for(KripkeWorld k:kw.relations){           
+                    res=res | ExpressionHelper.evalInWorld(n.lhs, k);
+                }
+                break;
+                
+            }
+            default:{
+                TableauNode tab=ExpressionHelper.Expression2Tableau(ExpressionHelper.normalizeNot(expr,false));
+                ArrayList<TableauNode> t= new ArrayList<TableauNode>();
+                t.add(tab);
+                res=true;
+                for(KripkeVariable kv:kw.variables){
+                    VariableExpressionNode v=new VariableExpressionNode(kv.name);
+                    v.negation=kv.not; //isSatisfied checks contrdiction
+                    VariableTableauNode vt=(VariableTableauNode)ExpressionHelper.Expression2Tableau(v);
+                    if (vv!=null) vv.clear();
+                    res&=ExpressionHelper.isSatisfied(t,vt);
+                    
+                }
+                break;
+            }
+                
+            
+        }
+        return res;
     }
 }
 
