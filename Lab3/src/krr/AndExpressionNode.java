@@ -22,7 +22,7 @@ public class AndExpressionNode   extends OperatorExpressionNode
     }
     public boolean getValue()
     {
-        return lhs.getValue() & rhs.getValue();
+        return lhs.getValue() && rhs.getValue();
     }
 
     

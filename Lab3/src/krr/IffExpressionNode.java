@@ -20,8 +20,8 @@ public class IffExpressionNode  extends OperatorExpressionNode{
     }
     public boolean getValue()
     {
-        return (lhs.getValue() & rhs.getValue())|
-                    (!lhs.getValue() & !rhs.getValue());
+        return (lhs.getValue() && rhs.getValue())|
+                    (!lhs.getValue() && !rhs.getValue());
     }
     
 }

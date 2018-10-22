@@ -351,7 +351,7 @@ public class ExpressionHelper {
                 BranchTableauNode t=(BranchTableauNode) tableau;
                 BranchTableauNode tnew=new BranchTableauNode();
                 
-                return ExpressionHelper.isContradiction(t.left)&
+                return ExpressionHelper.isContradiction(t.left)&&
                         ExpressionHelper.isContradiction(t.right);
             }
             default:
@@ -384,30 +384,40 @@ public class ExpressionHelper {
                 res=kw.relations.size()>0;
                 BoxExpressionNode n=(BoxExpressionNode)expr;
                 for(KripkeWorld k:kw.relations){           
-                    res=res & ExpressionHelper.evalInWorld(n.lhs, k);
+                    res=res && ExpressionHelper.evalInWorld(n.lhs, k);
                 }
                 break;
             }
             case ExpressionNode.DIAMOND_NODE:{
-                BoxExpressionNode n=(BoxExpressionNode)expr;
+                DiamondExpressionNode n=(DiamondExpressionNode)expr;
                 for(KripkeWorld k:kw.relations){           
-                    res=res | ExpressionHelper.evalInWorld(n.lhs, k);
+                    res=res || ExpressionHelper.evalInWorld(n.lhs, k);
                 }
                 break;
                 
             }
-            default:{
-                TableauNode tab=ExpressionHelper.Expression2Tableau(ExpressionHelper.normalizeNot(expr,false));
-                ArrayList<TableauNode> t= new ArrayList<TableauNode>();
-                t.add(tab);
-                res=true;
-                for(KripkeVariable kv:kw.variables){
-                    VariableExpressionNode v=new VariableExpressionNode(kv.name);
-                    v.negation=kv.not; //isSatisfied checks contrdiction
-                    VariableTableauNode vt=(VariableTableauNode)ExpressionHelper.Expression2Tableau(v);
-                    if (vv!=null) vv.clear();
-                    res&=ExpressionHelper.isSatisfied(t,vt);
-                    
+            case ExpressionNode.AND_NODE:{
+                AndExpressionNode n=(AndExpressionNode) expr;
+                res=evalInWorld(n.lhs, kw)&&evalInWorld(n.rhs, kw);
+                break;
+                
+            }
+            case ExpressionNode.OR_NODE:{
+                OrExpressionNode n=(OrExpressionNode) expr;
+                res=evalInWorld(n.lhs, kw)||evalInWorld(n.rhs, kw);
+                break;                
+            }
+
+            default:
+            case ExpressionNode.VARIABLE_NODE:
+            {
+                VariableExpressionNode n=(VariableExpressionNode) expr;
+                res=false;
+                for(KripkeVariable var:kw.variables){
+                    if(n.name.equals(var.name)){
+                        res=n.negation == var.not;
+                        break;
+                    }
                 }
                 break;
             }
@@ -416,5 +426,7 @@ public class ExpressionHelper {
         }
         return res;
     }
+    
+    
 }
 
