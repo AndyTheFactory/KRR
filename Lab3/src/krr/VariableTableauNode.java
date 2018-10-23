@@ -14,6 +14,8 @@ public class VariableTableauNode implements TableauNode
     public String var;
     public boolean not;
     public TableauNode next;
+    public TableauNode parent;
+    public int world=1;
     
     public VariableTableauNode(String name,boolean not)
     {
@@ -31,5 +33,18 @@ public class VariableTableauNode implements TableauNode
         return TableauNode.VARIABLE_NODE;
     }
         
+    @Override
+    public int getWorld()
+    {
+        return world;
+    }
+    
+    @Override
+    public ExpressionNode getExpression()
+    {
+        VariableExpressionNode expr=new VariableExpressionNode(var);
+        expr.negation=not;
+        return expr;
+    }
     
 }

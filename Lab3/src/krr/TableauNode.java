@@ -17,4 +17,8 @@ public interface TableauNode
     
     public int getType();
     
+    public int getWorld();
+    
+    public ExpressionNode getExpression();
+    
 }

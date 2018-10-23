@@ -426,7 +426,94 @@ public class ExpressionHelper {
         }
         return res;
     }
-    
-    
+    public static boolean evalModalExpressionType2(ArrayList<ExpressionNode> expressions)
+    {
+        boolean res=true;
+        boolean  wastype3=false;
+        ArrayList<ExpressionNode> newexpr=new ArrayList<ExpressionNode>();
+        
+        for(ExpressionNode expr:expressions){ 
+            //for each diamond create new branch
+            if (expr.getType()==ExpressionNode.DIAMOND_NODE){
+                    DiamondExpressionNode n=(DiamondExpressionNode)expr;
+                    newexpr.add(n.lhs);
+                }
+            }
+        for(ExpressionNode diamondexpr:newexpr){
+            //add each box to a branch
+            ArrayList<ExpressionNode> expr2=new ArrayList<ExpressionNode>();
+            expr2.add(diamondexpr);
+            for(ExpressionNode expr:expressions)
+                if (expr.getType()==ExpressionNode.BOX_NODE){
+                    BoxExpressionNode n=(BoxExpressionNode)expr;
+                    expr2.add(n.lhs);
+
+                            wastype3=true;
+                    }
+            res=res && evalModalExpression(expr2); // all branches must satisfy
+            if (!res) break;
+        }
+        if(!wastype3) res=evalModalExpression(newexpr); // no boxes, evaluate expressionset
+        return res;
+        
+    }
+    public static boolean evalModalExpression(ArrayList<ExpressionNode> expressions)
+    {
+        // Create initial expressions "tree"
+        boolean res=true;
+        boolean wastype1=false;
+        boolean hastype2=false;
+        ArrayList<String> vv=new ArrayList<String>();
+        
+        for(ExpressionNode expr:expressions){
+            switch (expr.getType()){
+                case ExpressionNode.AND_NODE:{
+                    ArrayList<ExpressionNode> newexpr=(ArrayList<ExpressionNode>)expressions.clone();
+                    newexpr.remove(expr);
+                    AndExpressionNode n=(AndExpressionNode)expr;
+                    newexpr.add(n.lhs);
+                    newexpr.add(n.rhs);
+                    res =res && evalModalExpression(newexpr);
+                    wastype1=true;
+                    break;
+                }
+                case ExpressionNode.OR_NODE:{
+                    ArrayList<ExpressionNode> newexpr=(ArrayList<ExpressionNode>)expressions.clone();
+                    newexpr.remove(expr);
+                    OrExpressionNode n=(OrExpressionNode)expr;
+                    newexpr.add(n.lhs);
+                    Boolean r1=evalModalExpression(newexpr);
+                    newexpr.remove(n.lhs);
+                    newexpr.add(n.rhs);                    
+                    Boolean r2=r1 || evalModalExpression(newexpr);
+                    res = res &&  r2;
+                    wastype1=true;
+                    break;
+                }
+                case ExpressionNode.VARIABLE_NODE:{
+                    VariableExpressionNode n=(VariableExpressionNode)expr;
+                    
+                    if ((n.negation && vv.contains(n.name))||
+                            (!n.negation && vv.contains("!"+n.name))){
+                        res=false;
+                    }else{
+                        vv.add(n.negation?("!"+n.name):n.name);
+                    }
+                }
+                case ExpressionNode.BOX_NODE:
+                case ExpressionNode.DIAMOND_NODE:
+                    hastype2=true;
+                    break;
+             
+            }
+            if (!res) break;
+        }
+        if (!res) return res;
+        
+        if (!wastype1 && hastype2)
+            res=evalModalExpressionType2(expressions);
+        
+        return res;
+    }
 }
 

@@ -13,11 +13,26 @@ public class BranchTableauNode implements TableauNode
 {
     public TableauNode left;
     public TableauNode right;
+    public TableauNode parent;
+    ExpressionNode expr;
     
+    public int world=1;
     
     public int getType()
     {
         return TableauNode.BRANCH_NODE;
+    }
+
+    @Override
+    public int getWorld()
+    {
+        return world;
+    }
+
+    @Override
+    public ExpressionNode getExpression()
+    {
+        return expr;
     }
         
     

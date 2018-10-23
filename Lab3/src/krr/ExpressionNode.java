@@ -19,7 +19,6 @@ public interface ExpressionNode {
     public static final int BOX_NODE        =7;
     public static final int DIAMOND_NODE    =8;
     
-    
     public int getType();
     public boolean getValue();
     

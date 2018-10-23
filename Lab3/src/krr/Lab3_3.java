@@ -34,11 +34,9 @@ public class Lab3_3 {
             System.out.println((++i)+". "+file);
         }
         System.out.println("\nPlease choose parameter file: ");
-        i=3;
-        /*
         Scanner input=new Scanner(System.in);
         i=input.nextInt();
-        */
+        
         Scanner fr=new Scanner(files[i-1]);            
         String line;
         i=0;
@@ -56,9 +54,15 @@ public class Lab3_3 {
                         ExpressionHelper.normalizeNot(expr, false)
                     )
             );
-            elist.add(expr);
-            
+            elist.add(ExpressionHelper.normalizeNot(expr, false));
         }
+        
+        if (ExpressionHelper.evalModalExpression(elist)){
+            System.out.println("Expressions are satisfiable ");
+        }else{
+            System.out.println("Expressions are not satisfiable ");
+        }
+        
     }
     
     
