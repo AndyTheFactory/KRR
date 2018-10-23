@@ -443,13 +443,21 @@ public class ExpressionHelper {
             //add each box to a branch
             ArrayList<ExpressionNode> expr2=new ArrayList<ExpressionNode>();
             expr2.add(diamondexpr);
-            for(ExpressionNode expr:expressions)
+            for(ExpressionNode expr:expressions){
                 if (expr.getType()==ExpressionNode.BOX_NODE){
                     BoxExpressionNode n=(BoxExpressionNode)expr;
                     expr2.add(n.lhs);
 
                             wastype3=true;
                     }
+                if (expr.getType()==ExpressionNode.VARIABLE_NODE){
+                    VariableExpressionNode n=(VariableExpressionNode)expr;
+                    expr2.add(n);
+
+                            wastype3=true;
+                    }
+            }    
+                
             res=res && evalModalExpression(expr2); // all branches must satisfy
             if (!res) break;
         }

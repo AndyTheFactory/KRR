@@ -1,6 +1,6 @@
 #(DoorOpen -> (ForgotClose | Burglar))
 #(WindowBroken -> (FootballAccident | Burglar))
 DoorOpen
-WinndowBroken
-~(ForgotClose & FootballAccident)
-Burglar
+WindowBroken
+~(*(ForgotClose & FootballAccident))
+*(~Burglar)
