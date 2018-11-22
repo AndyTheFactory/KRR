@@ -26,7 +26,9 @@ public class Lab5 {
         
         ArrayList<BayesGraph> myGraph=parsefile.parseFile(setupfile);
         
-        System.out.println(myGraph);
+        ArrayList<CliqueGraph> myCliqueGraph=Lab5Helper.MorlaizeGraph(myGraph);
+        System.out.println(myCliqueGraph);
+        
         
     }
     

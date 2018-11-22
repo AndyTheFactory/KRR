@@ -15,6 +15,10 @@ public class CliqueGraph
 {
     String name;
     ArrayList<CliqueGraph> edgeTo;
+    public CliqueGraph()
+    {
+        edgeTo=new ArrayList<>();
+    }
     public String toString(){
         StringBuilder sb=new StringBuilder();
         
