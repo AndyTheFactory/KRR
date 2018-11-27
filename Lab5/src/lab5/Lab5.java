@@ -8,6 +8,7 @@ package lab5;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Set;
 
 /**
  *
@@ -31,7 +32,26 @@ public class Lab5 {
         Lab5Helper.Triangulate(myWorkGraph);
         
         System.out.println(myWorkGraph);
+        ArrayList<Set<WorkGraph>> Cliques=new ArrayList<Set<WorkGraph>>();
+        ArrayList<WorkGraph> R=new ArrayList<>();
+        ArrayList<WorkGraph> X=new ArrayList<>();
         
+        
+        Lab5Helper.BronKerbosch(R, myWorkGraph, X, Cliques);
+        int i=0;
+        for(Set<WorkGraph> S:Cliques){
+            i++;
+            System.out.println("Clique "+i+":");
+            for(WorkGraph N:S)
+            {
+                System.out.print(N.name+",");
+            }
+            System.out.println("");
+        }
+        ArrayList<CliqueGraph> Graph=Lab5Helper.constructCliqueGraph(Cliques);
+        CliqueGraph Tree=Lab5Helper.getCliqueTree(Graph);
+        
+        System.out.println(Tree.printTree());
         
     }
     

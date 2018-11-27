@@ -7,6 +7,9 @@ package lab5;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  *
@@ -169,5 +172,116 @@ public class Lab5Helper
         }
         return minNode;
         
+    }
+    
+    static void BronKerbosch(ArrayList<WorkGraph> R, ArrayList<WorkGraph> P , ArrayList<WorkGraph> X, ArrayList<Set<WorkGraph>> Cliques)
+    {
+        if (P.isEmpty() && X.isEmpty()){
+            Cliques.add(new HashSet<WorkGraph>(R));
+        }else{
+            ArrayList<WorkGraph> candidates=new ArrayList<WorkGraph>(P);
+            for(WorkGraph v:candidates){
+                ArrayList<WorkGraph> new_P=new ArrayList<>();
+                ArrayList<WorkGraph> new_X=new ArrayList<>();
+                
+                for(WorkGraph N:v.edgeTo){//Add neighbours in candidates
+                    if (findNodeWork(N.name, P)!=null){
+                        new_P.add(N);
+                    }
+                    if (findNodeWork(N.name, X)!=null){
+                        new_X.add(N);
+                    }
+                }
+                R.add(v);
+                BronKerbosch(R, new_P, new_X, Cliques);
+                R.remove(v);
+                P.remove(v);
+                X.add(v);
+            }
+        }
+        
+    }
+    
+    static ArrayList<CliqueGraph> constructCliqueGraph(ArrayList<Set<WorkGraph>> Cliques){
+        ArrayList<CliqueGraph> Graph=new ArrayList<CliqueGraph>();
+        
+        for(Set<WorkGraph> S:Cliques){
+            CliqueGraph Node=new CliqueGraph(S);
+            for(CliqueGraph Node2:Graph){
+                if (!Node.intersect(Node).isEmpty()){
+                    Node.edgeTo.add(Node2);
+                    Node2.edgeTo.add(Node);
+                }
+            }
+            Graph.add(Node);
+        }
+        return Graph;
+    }
+    static ArrayList<CliqueEdge> getSortedEdges(ArrayList<CliqueGraph> Graph){
+        ArrayList<CliqueEdge> edges=new ArrayList<CliqueEdge>();
+        ArrayList<CliqueGraph> doneNodes=new ArrayList<CliqueGraph>();
+        for (CliqueGraph Node:Graph)
+            for(CliqueGraph Node2:Node.edgeTo)
+                if(!doneNodes.contains(Node2)){
+                    CliqueEdge e=new CliqueEdge(Node,Node2);
+                    edges.add(e);
+                }
+        edges.sort(new Comparator<CliqueEdge>(){
+                @Override
+                public int compare(CliqueEdge E1,CliqueEdge E2){
+                    return E1.weight>E2.weight?-1 : (E1.weight==E2.weight?0:1);
+                }
+            }
+        );
+        return edges;
+    }
+    
+    static CliqueGraph getCliqueTree(ArrayList<CliqueGraph> Graph){
+        ArrayList<CliqueEdge> edges=getSortedEdges(Graph);
+        ArrayList<CliqueGraph> tree=new ArrayList<CliqueGraph>();
+        if (edges.isEmpty()) 
+            return null;
+        do{
+            CliqueEdge E=edges.get(0);
+            edges.remove(E);
+            
+            CliqueGraph Node1=findInTree(E.N1, tree),
+                    Node2=findInTree(E.N2, tree);
+            
+            boolean hasCycle=true;
+            if (Node1==null){
+               Node1=new CliqueGraph(E.N1.nodes);
+               hasCycle=false;
+            }
+            if (Node2==null){
+               Node2=new CliqueGraph(E.N2.nodes);
+               hasCycle=false;
+            }
+
+            if(hasCycle && !Node1.findWay(Node2)){
+                hasCycle=false;
+            }
+                
+            if (!hasCycle){
+                if (!tree.contains(Node1))
+                    tree.add(Node1);
+                if (!tree.contains(Node2))
+                    tree.add(Node2);
+                Node1.edgeTo.add(Node2);
+                Node2.edgeTo.add(Node1);
+            }
+            
+        }while(!edges.isEmpty() && tree.size()<Graph.size());
+        
+       
+        return tree.get(0);
+        
+    }
+    static CliqueGraph findInTree(CliqueGraph needle,ArrayList<CliqueGraph> Tree)
+    {
+        for(CliqueGraph N:Tree)
+            if(N.isEqual(needle))
+                return N;
+        return null;
     }
  }
