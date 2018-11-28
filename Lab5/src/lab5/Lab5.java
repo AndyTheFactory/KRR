@@ -34,6 +34,8 @@ public class Lab5 {
         
         Lab5Helper.Triangulate(myWorkGraph);
         
+        GraphVisualization.writeWorkJSON("visualization\\data\\triangulated.json", myWorkGraph);
+
         System.out.println(myWorkGraph);
         ArrayList<Set<WorkGraph>> Cliques=new ArrayList<Set<WorkGraph>>();
         ArrayList<WorkGraph> R=new ArrayList<>();
@@ -52,14 +54,14 @@ public class Lab5 {
             System.out.println("");
         }
 
+
         ArrayList<CliqueGraph> Graph=Lab5Helper.constructCliqueGraph(Cliques);
-        GraphVisualization.writeJSON("c:\\Projects\\KRR\\Lab5\\visualization\\data\\cliquegraph.json", Graph);
+        GraphVisualization.writeJSON("visualization\\data\\cliquegraph.json", Graph);
 
         CliqueGraph Tree=Lab5Helper.getCliqueTree(Graph);
         
         System.out.println(Tree.printTree());
-        if (false)
-            GraphVisualization.writeJSON("c:\\Projects\\KRR\\Lab5\\visualization\\data\\cliquetree.json", Tree);
+        GraphVisualization.writeJSON("visualization\\data\\cliquetree.json", Tree);
     }
     
 }

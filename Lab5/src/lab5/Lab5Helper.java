@@ -208,7 +208,7 @@ public class Lab5Helper
         for(Set<WorkGraph> S:Cliques){
             CliqueGraph Node=new CliqueGraph(S);
             for(CliqueGraph Node2:Graph){
-                if (!Node.intersect(Node).isEmpty()){
+                if (!Node.intersect(Node2).isEmpty()){
                     Node.edgeTo.add(Node2);
                     Node2.edgeTo.add(Node);
                 }
@@ -225,6 +225,7 @@ public class Lab5Helper
                 if(!doneNodes.contains(Node2)){
                     CliqueEdge e=new CliqueEdge(Node,Node2);
                     edges.add(e);
+                    doneNodes.add(Node2);
                 }
         edges.sort(new Comparator<CliqueEdge>(){
                 @Override

@@ -23,12 +23,55 @@ public class GraphVisualization {
         writeJSON(filename, graph,true);
     }
     private static ArrayList<CliqueGraph> treeWalk(CliqueGraph Tree){
+        ArrayList<CliqueGraph> alreadyNodes=new ArrayList<>();
+        return treeWalk(Tree,alreadyNodes);
+    }
+    private static ArrayList<CliqueGraph> treeWalk(CliqueGraph Tree,ArrayList<CliqueGraph> alreadyNodes){
         ArrayList<CliqueGraph> res=new ArrayList<>();
         res.add(Tree);
-        for(CliqueGraph Node:Tree.edgeTo){
-            res.addAll(treeWalk(Node));
-        }
+        for(CliqueGraph Node:Tree.edgeTo)
+            if (!alreadyNodes.contains(Node)){
+                alreadyNodes.add(Node);
+                res.addAll(treeWalk(Node,alreadyNodes));
+            }
         return res;
+    }
+    public static void writeWorkJSON(String filename, ArrayList<WorkGraph> Graph) throws IOException{
+        BufferedWriter file=new BufferedWriter(new FileWriter(filename));
+        StringBuilder sb=new StringBuilder("{\n\"comment\":\"Bla\",\n\"nodes\":");
+        ArrayList<EdgeClass> edges=new ArrayList<>();
+        
+        StringJoiner sj=new StringJoiner(",","[\n","\n]");
+        int i=0;
+        for(WorkGraph Node:Graph){
+            i++;
+            sj.add(
+                 String.format("    {      \"id\": %d,\n" +
+                                "      \"caption\": \"%s\",\n" +
+                                "      \"root\": %s\n    }\n"
+                    ,Node.hashCode(),Node.name,"false"
+                 )
+            );
+            for(WorkGraph N:Node.edgeTo){
+                EdgeClass edge=new EdgeClass();
+                edge.from=Node.hashCode();
+                edge.to=N.hashCode();
+                edge.caption="";
+                edges.add(edge);
+            }
+            
+        }
+        sb.append(sj.toString());
+        sb.append("\n,\n\"edges\":");
+        sj=new StringJoiner(",","[\n","\n]");
+        for(EdgeClass edge:edges){
+            sj.add(edge.toString());
+        }
+        sb.append(sj.toString());
+        sb.append("\n}\n");
+        
+        file.write(sb.toString());
+        file.close();
     }
     public static void writeJSON(String filename, ArrayList<CliqueGraph> Graph) throws IOException{
         writeJSON(filename, Graph,false);
