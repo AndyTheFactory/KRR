@@ -97,7 +97,7 @@ public class CliqueGraph {
             if (alreadyNodes.contains(N))
                 continue;
             alreadyNodes.add(N);
-            sb.append(N.printTree(alreadyNodes));
+            sb.append(N.printTree(alreadyNodes)+"\n");
         }
         return sb.toString();
     }
@@ -107,7 +107,7 @@ public class CliqueGraph {
         sb.append("Node: ");
         for(WorkGraph N:nodes)
             sb.append(N.name+", ");
-        sb.append("\n");
+        //sb.append("\n");
         
         return sb.toString();
     }

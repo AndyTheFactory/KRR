@@ -1,6 +1,10 @@
 <html>
 <head>
-  <link rel="stylesheet" href="alchemy/alchemy.min.css"/>
+  <link rel="stylesheet" href="alchemy/alchemy.css"/>
+  <style>
+		.alchemy .edge {stroke: #c0ff00 !important;}
+		.alchemy circle{fill:rgb(121, 120, 180)!important;}
+  </style>
 </head>
 <body>
   <div class="alchemy" id="alchemy"></div>
@@ -9,7 +13,7 @@
   <script src="alchemy/alchemy.js"></script>
   <script type="text/javascript">
         var config = {
-            dataSource: 'data/graph.json',
+            dataSource: 'data/cliquegraph.json',
 			edgeCaptionsOnByDefault:true,
 			nodeCaptionsOnByDefault:true
             };
