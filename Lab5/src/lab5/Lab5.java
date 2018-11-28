@@ -62,6 +62,10 @@ public class Lab5 {
         
         System.out.println(Tree.printTree());
         GraphVisualization.writeJSON("visualization\\data\\cliquetree.json", Tree);
+        
+        JunctionTree JTree=Lab5Helper.convertCliqueTree2Junction(Tree);
+        ArrayList<JunctionTree> JLeaves=JTree.getLeaves();
+        
     }
     
 }

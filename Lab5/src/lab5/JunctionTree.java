@@ -57,7 +57,19 @@ public class JunctionTree {
                 return false;
         return true;
     }
-    
+    public ArrayList<JunctionTree> getLeaves()
+    {
+        ArrayList<JunctionTree> res=new ArrayList<JunctionTree>();
+        if (children.size()<=0){
+            res.add(this);
+            return res;
+        }
+        
+        for(JunctionTree J:this.children){
+            res.addAll(J.getLeaves());
+        }
+        return res;
+    }
     
     
 }

@@ -7,6 +7,8 @@ package lab5;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
@@ -266,8 +268,14 @@ public class Lab5Helper
             if (!hasCycle){
                 if (!tree.contains(Node1))
                     tree.add(Node1);
+                if (tree.get(0).nodes.size()<Node1.nodes.size()){
+                    Collections.swap(tree, 0, tree.indexOf(Node1));
+                }
                 if (!tree.contains(Node2))
                     tree.add(Node2);
+                if (tree.get(0).nodes.size()<Node2.nodes.size()){
+                    Collections.swap(tree, 0, tree.indexOf(Node2));
+                }
                 Node1.edgeTo.add(Node2);
                 Node2.edgeTo.add(Node1);
             }
@@ -278,7 +286,22 @@ public class Lab5Helper
         return tree.get(0);
         
     }
-    static CliqueGraph findInTree(CliqueGraph needle,ArrayList<CliqueGraph> Tree)
+    public static JunctionTree convertCliqueTree2Junction(CliqueGraph CliqueTree){
+        return convertCliqueTree2Junction(CliqueTree, new ArrayList<CliqueGraph>());
+    }
+    private static JunctionTree convertCliqueTree2Junction(CliqueGraph CliqueTree,ArrayList<CliqueGraph> alreadyNodes){
+        alreadyNodes.add(CliqueTree);
+        JunctionTree tree=new JunctionTree(CliqueTree);
+        for(CliqueGraph N:CliqueTree.edgeTo)
+            if (!alreadyNodes.contains(N))
+            {
+                JunctionTree child=convertCliqueTree2Junction(N,alreadyNodes);
+                tree.children.add(child);
+                child.parents.add(tree);
+            }
+        return tree;
+    }
+    private static CliqueGraph findInTree(CliqueGraph needle,ArrayList<CliqueGraph> Tree)
     {
         for(CliqueGraph N:Tree)
             if(N.isEqual(needle))
