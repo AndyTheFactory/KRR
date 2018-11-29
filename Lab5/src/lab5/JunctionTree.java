@@ -7,6 +7,7 @@ package lab5;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -17,6 +18,7 @@ public class JunctionTree {
     Set<String> nodes;
     ArrayList<JunctionTree> parents;
     ArrayList<JunctionTree> children;
+    Map<String,Map<String,Double>> factori;
     
     public JunctionTree()
     {
@@ -69,6 +71,14 @@ public class JunctionTree {
             res.addAll(J.getLeaves());
         }
         return res;
+    }
+    public void assignFactors(ArrayList<BayesGraph> Bgraph){
+        // audaug toti factorii ai caror noduri sunt incluse in clica
+        // atentie - datele din fisier sunt pt A=1 etc, pt A=0 se 
+        // afla prin scadere
+        for(BayesGraph BNode:Bgraph){
+            
+        }
     }
     
     

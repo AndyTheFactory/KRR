@@ -1,43 +1,43 @@
 {
 "comment":"Bla",
 "nodes":[
-    {      "id": 716143810,
+    {      "id": 1304836502,
       "caption": "Node: B, C, D, ",
       "root": true
     }
-,    {      "id": 1849433705,
-      "caption": "Node: G, C, D, ",
+,    {      "id": 225534817,
+      "caption": "Node: C, G, D, ",
       "root": false
     }
-,    {      "id": 716143810,
+,    {      "id": 1304836502,
       "caption": "Node: B, C, D, ",
       "root": false
     }
-,    {      "id": 411631404,
+,    {      "id": 1878246837,
       "caption": "Node: B, A, ",
       "root": false
     }
-,    {      "id": 897913732,
+,    {      "id": 929338653,
       "caption": "Node: F, D, ",
       "root": false
     }
-,    {      "id": 896681694,
-      "caption": "Node: F, I, ",
+,    {      "id": 1020371697,
+      "caption": "Node: I, F, ",
       "root": false
     }
-,    {      "id": 687241927,
-      "caption": "Node: H, K, I, ",
+,    {      "id": 789451787,
+      "caption": "Node: I, H, K, ",
       "root": false
     }
-,    {      "id": 1688019098,
-      "caption": "Node: G, E, C, ",
+,    {      "id": 1259475182,
+      "caption": "Node: E, C, G, ",
       "root": false
     }
-,    {      "id": 1792845110,
-      "caption": "Node: G, E, J, ",
+,    {      "id": 1300109446,
+      "caption": "Node: E, G, J, ",
       "root": false
     }
-,    {      "id": 627185331,
+,    {      "id": 1950409828,
       "caption": "Node: L, J, ",
       "root": false
     }
@@ -46,118 +46,118 @@
 ,
 "edges":[
     {
-      "source": 716143810,
-      "target": 1849433705,
+      "source": 1304836502,
+      "target": 225534817,
       "caption": "C,D"
     }
 ,    {
-      "source": 716143810,
-      "target": 411631404,
+      "source": 1304836502,
+      "target": 1878246837,
       "caption": "B"
     }
 ,    {
-      "source": 716143810,
-      "target": 411631404,
+      "source": 1304836502,
+      "target": 1878246837,
       "caption": "B"
     }
 ,    {
-      "source": 716143810,
-      "target": 897913732,
+      "source": 1304836502,
+      "target": 929338653,
       "caption": "D"
     }
 ,    {
-      "source": 716143810,
-      "target": 1688019098,
+      "source": 1304836502,
+      "target": 1259475182,
       "caption": "C"
     }
 ,    {
-      "source": 1849433705,
-      "target": 716143810,
+      "source": 225534817,
+      "target": 1304836502,
       "caption": "C,D"
     }
 ,    {
-      "source": 1849433705,
-      "target": 1792845110,
+      "source": 225534817,
+      "target": 1300109446,
       "caption": "G"
     }
 ,    {
-      "source": 716143810,
-      "target": 1849433705,
+      "source": 1304836502,
+      "target": 225534817,
       "caption": "C,D"
     }
 ,    {
-      "source": 716143810,
-      "target": 411631404,
+      "source": 1304836502,
+      "target": 1878246837,
       "caption": "B"
     }
 ,    {
-      "source": 716143810,
-      "target": 411631404,
+      "source": 1304836502,
+      "target": 1878246837,
       "caption": "B"
     }
 ,    {
-      "source": 716143810,
-      "target": 897913732,
+      "source": 1304836502,
+      "target": 929338653,
       "caption": "D"
     }
 ,    {
-      "source": 716143810,
-      "target": 1688019098,
+      "source": 1304836502,
+      "target": 1259475182,
       "caption": "C"
     }
 ,    {
-      "source": 411631404,
-      "target": 716143810,
+      "source": 1878246837,
+      "target": 1304836502,
       "caption": "B"
     }
 ,    {
-      "source": 411631404,
-      "target": 716143810,
+      "source": 1878246837,
+      "target": 1304836502,
       "caption": "B"
     }
 ,    {
-      "source": 897913732,
-      "target": 716143810,
+      "source": 929338653,
+      "target": 1304836502,
       "caption": "D"
     }
 ,    {
-      "source": 897913732,
-      "target": 896681694,
+      "source": 929338653,
+      "target": 1020371697,
       "caption": "F"
     }
 ,    {
-      "source": 896681694,
-      "target": 897913732,
+      "source": 1020371697,
+      "target": 929338653,
       "caption": "F"
     }
 ,    {
-      "source": 896681694,
-      "target": 687241927,
+      "source": 1020371697,
+      "target": 789451787,
       "caption": "I"
     }
 ,    {
-      "source": 687241927,
-      "target": 896681694,
+      "source": 789451787,
+      "target": 1020371697,
       "caption": "I"
     }
 ,    {
-      "source": 1688019098,
-      "target": 716143810,
+      "source": 1259475182,
+      "target": 1304836502,
       "caption": "C"
     }
 ,    {
-      "source": 1792845110,
-      "target": 1849433705,
+      "source": 1300109446,
+      "target": 225534817,
       "caption": "G"
     }
 ,    {
-      "source": 1792845110,
-      "target": 627185331,
+      "source": 1300109446,
+      "target": 1950409828,
       "caption": "J"
     }
 ,    {
-      "source": 627185331,
-      "target": 1792845110,
+      "source": 1950409828,
+      "target": 1300109446,
       "caption": "J"
     }
 
