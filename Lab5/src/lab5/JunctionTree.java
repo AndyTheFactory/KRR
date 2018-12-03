@@ -18,6 +18,9 @@ public class JunctionTree {
     Set<String> nodes;
     ArrayList<JunctionTree> parents;
     ArrayList<JunctionTree> children;
+    int nrmessages;
+    double m_up;
+    double m_down;
     Map<String,Map<String,Double>> factori;
     
     public JunctionTree()
@@ -25,6 +28,7 @@ public class JunctionTree {
         nodes=new HashSet<>();
         parents=new ArrayList<>();
         children=new ArrayList<>();
+        nrmessages=0;
     }
     public JunctionTree(CliqueGraph Node)
     {
