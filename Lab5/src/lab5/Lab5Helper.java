@@ -308,4 +308,14 @@ public class Lab5Helper
                 return N;
         return null;
     }
+    public static boolean addCPDtoTree(CPD cpd, JunctionTree Tree){
+        if (Tree.containsVars(cpd.vars)){
+            Tree.factori.put(cpd.vars, cpd);
+            return true;
+        }
+        for(JunctionTree child:Tree.children)
+            if (addCPDtoTree(cpd, child)) return true;
+        
+        return false;
+    }
  }

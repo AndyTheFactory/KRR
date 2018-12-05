@@ -42,7 +42,8 @@ public class BayesGraphParser extends SetupFileparser<BayesGraph>
                 B.children=new ArrayList<BayesGraph>();
             }
             B.parents=readParents(spl[1]);
-            B.CPD=readCPD(spl[1], spl[2]);
+            B.cpd=new CPD();
+            B.cpd.readFromDef(line);
             //set children
             for(BayesGraph BNode:B.parents){
                 if (Lab5Helper.findNode(B.name, BNode.children)==null){

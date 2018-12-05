@@ -17,8 +17,8 @@ public class BayesGraph
     ArrayList<BayesGraph> parents;
     ArrayList<BayesGraph> children;
     String name;
-    Map<String,Double> CPD;
-    
+    //Map<String,Double> CPD;
+    CPD cpd;
     public String toString(){
         StringBuilder sb=new StringBuilder();
         

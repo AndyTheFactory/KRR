@@ -66,6 +66,10 @@ public class Lab5 {
         JunctionTree JTree=Lab5Helper.convertCliqueTree2Junction(Tree);
         ArrayList<JunctionTree> JLeaves=JTree.getLeaves();
         
+        for(BayesGraph BNode:myGraph){
+            Lab5Helper.addCPDtoTree(BNode.cpd, JTree);
+        }
+        
     }
     
 }
