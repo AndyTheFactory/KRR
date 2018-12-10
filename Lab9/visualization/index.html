@@ -1,0 +1,44 @@
+<html>
+<head>
+  <link rel="stylesheet" href="alchemy/alchemy.css"/>
+  <style>
+		.alchemy .edge {stroke: #c0ff00 !important;}
+		.alchemy circle{fill:rgb(121, 120, 180)!important;}
+		.node.all text {
+		display: block;
+		font-size: 15px;
+		fill: white;
+		}
+
+		.edge.all text {
+			display: block;
+			font-size: 20px;
+			text-anchor: middle;
+			fill: yellow;
+		}
+		g.edge.all {
+			opacity:0.7 !important;
+		}
+  </style>
+</head>
+<body>
+  <h3>
+	<a href="index-triangulated.html">Triangulated Graph</a>&nbsp;&nbsp;&nbsp;
+	<a href="index.html">Clique Graph</a>&nbsp;&nbsp;&nbsp;
+	<a href="index-tree.html">Clique Tree</a>&nbsp;&nbsp;&nbsp;
+  </h3>
+  <div class="alchemy" id="alchemy"></div>
+
+  <script src="alchemy/scripts/vendor.js"></script>
+  <script src="alchemy/alchemy.js"></script>
+  <script type="text/javascript">
+        var config = {
+            dataSource: 'data/cliquegraph.json',
+			edgeCaptionsOnByDefault:true,
+			nodeCaptionsOnByDefault:true
+            };
+
+        alchemy = new Alchemy(config)
+    </script>
+  </body>
+</html>

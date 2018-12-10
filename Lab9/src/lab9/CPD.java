@@ -49,4 +49,9 @@ public class CPD {
         
         
     }
+    public String toString()
+    {
+        if (vars.length()<=0) return "";
+        return "P("+vars.charAt(0)+"|"+vars.substring(1)+")";
+    }
 }
