@@ -318,4 +318,10 @@ public class Lab5Helper
         
         return false;
     }
+    public static void propagateMessageUP(JunctionTree JTree, ArrayList<JunctionTree> Leaves)
+    {
+        for(JunctionTree JNode:Leaves){
+            
+        }
+    }
  }

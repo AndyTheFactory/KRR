@@ -70,6 +70,7 @@ public class Lab5 {
             Lab5Helper.addCPDtoTree(BNode.cpd, JTree);
         }
         
+        
     }
     
 }
