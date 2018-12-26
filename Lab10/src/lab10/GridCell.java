@@ -20,4 +20,13 @@ public class GridCell {
     public void setPosition(int x,int y){
         this.x=x;this.y=y;
     }
+    public boolean isNeighbour(int x1,int y1){
+        return (Math.abs(x-x1)<=1)&&(Math.abs(y-y1)<=1)&&((x1!=x)||(y1!=y));
+    }
+    public boolean isNeighbour(GridCell cell){
+        return isNeighbour(cell.x,cell.y);
+    }
+    public boolean isEqual(GridCell cell){
+        return cell.x==x && cell.y==y;
+    }
 }

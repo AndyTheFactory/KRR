@@ -30,6 +30,11 @@ public class Lab9 {
         for(BayesGraph BNode:myGraph){
             Lab9Helper.CPDbySample(BNode.cpd, parsefile.vars, parsefile.sampleData);
         }
+
+        for(BayesGraph BNode:myGraph){
+            Lab9Helper.CPDStochastic(BNode.cpd, parsefile.vars, parsefile.sampleData);
+        }
+
         System.out.println(myGraph);
     }
     

@@ -27,6 +27,7 @@ public class Lab10 {
         int[] testi=new int[]{0, 1, 2, 5, 10, 13, 15};
         int[] testj=new int[]{1, 0, 3, 4, 9, 2, 14};
         
+        System.out.println(g1.getProbabilityMatrix()); 
         
     }
     

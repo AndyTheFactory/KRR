@@ -30,6 +30,9 @@ public class Grid {
             }
         
     }
+    public ArrayList<State> getNeighbours(State s){        
+        return getNeighbours(s.cell.x,s.cell.y);
+    }
     public ArrayList<State> getNeighbours(int x, int y){        
         ArrayList<State> res=new ArrayList<>();
         int N,Nmax=0,Hmax=0;
@@ -39,8 +42,7 @@ public class Grid {
             for(int j=y-1;j<=y+1;j++)
                 if (i!=x && j!=y){
                     if (i>=0 && j<=0 && i<cells.length && j<cells[0].length){
-                        State s=new State();
-                        s.cell=cells[i][j];
+                        State s=new State(cells[i][j]);                        
                         Hmax=Math.max(s.cell.elevation,Hmax);
                         res.add(s);
                     }
@@ -58,6 +60,9 @@ public class Grid {
         }    
         return res;
     }
+    public ArrayList<ColorState> getColors(State s){
+        return getColors(s.cell.x, s.cell.y);
+    }        
     public ArrayList<ColorState> getColors(int x, int y){        
         ArrayList<ColorState> res=new ArrayList<>();
         for(int i=0;i<=NRCOLORS-1;i++){
@@ -75,10 +80,32 @@ public class Grid {
         }
         return res;
     }
-    
+    public double getProbability(State si, State sj){
+        if (!si.cell.isNeighbour(sj.cell)) 
+            return 0;
+        ArrayList<State> neighbours=getNeighbours(si);
+        double prob=0;
+        for(State s:neighbours)
+            if (s.equals(sj)) 
+                prob=sj.Probability;
+        return prob;        
+    }
     public double forwardAlg(int[]x,int[]y){
         double pi0=1/(cells.length*cells[0].length);
-        
+        return 0;
+    }
+    double[][] getProbabilityMatrix()
+    {
+        int nrcells=cells.length*cells[0].length;
+        double[][] res=new double[nrcells][nrcells];
+        for(int i=0;i<nrcells;i++)
+            for(int j=0;j<nrcells;j++){
+                res[i][j]=getProbability(
+                    new State(i % cells.length, (int)(i/cells.length)),
+                    new State(j % cells.length, (int)(j/cells.length))
+                );
+            }
+        return res;
     }
     
 }

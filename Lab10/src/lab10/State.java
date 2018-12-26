@@ -12,4 +12,10 @@ package lab10;
 public class State {
     GridCell cell;
     double Probability;
+    public State(int x, int y){
+        cell=new GridCell(x, y);
+    }
+    public State(GridCell cell){
+        this.cell=cell;
+    }
 }
