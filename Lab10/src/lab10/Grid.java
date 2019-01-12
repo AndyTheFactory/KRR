@@ -66,9 +66,7 @@ public class Grid {
     public ArrayList<ColorState> getColors(int x, int y){        
         ArrayList<ColorState> res=new ArrayList<>();
         for(int i=0;i<=NRCOLORS-1;i++){
-            ColorState cs=new ColorState();
-            cs.cell=cells[x][y];
-            cs.color=i;
+            ColorState cs=new ColorState(i,cells[x][y]);
             cs.Probability=(cells[x][y].color==i)?(
                         po+(1-po/NRCOLORS)
                     ):(
@@ -107,5 +105,27 @@ public class Grid {
             }
         return res;
     }
-    
+    double getEmissionProbability(State si,ColorState c)
+    {
+        if (si.cell.color==c.color){
+            c.Probability=po+(1-po)/NRCOLORS;
+        }else{
+            c.Probability=(1-po)/NRCOLORS;
+        }
+        return c.Probability;
+    }
+    double[][][] getEmissionProbabilityMatrix()
+    {
+        double[][][] res=new double[cells.length][cells[0].length][NRCOLORS];
+        for(int i=0;i<cells.length;i++)
+            for(int j=0;j<cells[0].length;j++)
+                for(int c=0;c<NRCOLORS;c++)
+                {
+                    res[i][j][c]=getEmissionProbability(
+                        new State(i ,j),
+                        new ColorState(c)
+                    );
+                }
+        return res;
+    }
 }

@@ -13,4 +13,11 @@ public class ColorState {
     int color;
     GridCell cell;
     double Probability;
+    public ColorState(int color){
+        this.color=color;
+    }
+    public ColorState(int color,GridCell cell){
+        this.color=color;
+        this.cell=cell;
+    }
 }
