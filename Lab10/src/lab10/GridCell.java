@@ -13,6 +13,12 @@ public class GridCell {
     int elevation;
     int color;
     int x,y;
+    public GridCell(int x,int y,int e,int c){
+        this.x=x;
+        this.y=y;
+        this.color=c;
+        this.elevation=e;
+    }
     public GridCell(int e,int c){
         this.color=c;
         this.elevation=e;
