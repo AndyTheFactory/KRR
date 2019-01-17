@@ -65,6 +65,12 @@ public class Lab10 {
             System.out.print(String.format("(%d,%d),", s.cell.x,s.cell.y));
         }
         System.out.println("");
+        int[] obs=new int[seq.size()];
+        for(int i=0;i<obs.length;i++)
+            obs[i]=seq.get(i).color;
+            
+        Lab10Helper.baumWelch(obs);
+        
     }
     
 }
